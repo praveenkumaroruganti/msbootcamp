@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: first-ms
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: first-ms
+  template:
+    metadata:
+      labels:
+        app: first-ms
+    spec:
+      containers:
+      - name: first-ms
+        image: poruganti1/first-ms:latest
+        env:
+          - name: SPRING_CLOUD_CONFIG_URI
+            value: http://config-server.default.svc.cluster.local:8888
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
